@@ -2,7 +2,7 @@
   "name": "webpack5-vue3-starter",
   "version": "1.0.0",
   "description": "a vue3 project template based on webpack5",
-  "pakageManager": "",
+  "packageManager": "pnpm",
   "private": true,
   "author": {
     "name": "zaixf",
