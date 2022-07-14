@@ -16,15 +16,15 @@ module.exports = merge(baseConfig, {
   optimization: {
     splitChunks: {
       chunks: 'all',
-      minSize: 20000,
-      minChunks: 1,
-      cacheGroups: {
-        defaultVendors: {
+      minSize: 20000,  // 提取chunk的最小体积
+      minChunks: 1, // 要提取的chunk最少被引用次数
+      cacheGroups: { // 对要提取的trunk进行分组
+        defaultVendors: { // 匹配node_modules中的三方库，将其打包成一个trunk
           test: /[\\/]node_modules[\\/]/,
           name: 'vendors',
           priority: -10
         },
-        default: {
+        default: {  // 将至少被两个trunk引入的模块提取出来打包成单独trunk
           minChunks: 2,
           name: 'default',
           priority: -20
@@ -58,7 +58,10 @@ module.exports = merge(baseConfig, {
     ]
   },
   plugins: [
-    new MiniCssExtractPlugin(), // css打包成单独的文件
+    new MiniCssExtractPlugin({ // css提取成文件
+      filename: 'style/[name].[hash:8].css',
+      chunkFilename: 'style/[hash:8].css'
+    }), // css打包成单独的文件
     new CopyWebpackPlugin({ // 复制不需要打包的文件
       patterns: [{ from: './public', to: './public'}]
     }), 

@@ -23,7 +23,7 @@ new HtmlWebpackPlugin({
 ```
 ## 处理.vue
 - vue@next
-- vue-loader@next
+- vue-loader
 > 解析vue文件
 - @vue/compiler-sfc
 > 对vue单文件进行处理
@@ -69,7 +69,6 @@ generator: {
     post: 1080, // 端口
     hot: true, // 热更新
     open: false, // 自动打开浏览器
-    quiet: true, // 静默，不输出信息
   }
 ```
 # 生产环境

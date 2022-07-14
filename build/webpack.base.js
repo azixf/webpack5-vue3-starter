@@ -38,7 +38,18 @@ module.exports = {
           isDev ? "style-loader" : MiniCssExtractPlugin.loader, // 在开发环境，我使用 style-loader 有更高的开发效率，打包时，则能将样式抽离成单独的文件
           "css-loader",
           "postcss-loader",
-          "less-loader",
+          {
+            loader: "less-loader",
+            options: {
+              lessOptions: {
+                javascriptEnabled: true,
+                modifyVars: {
+                  'primary': '#1850fa'
+                } // 覆盖组件库主体变量
+              },
+              additionalData: `@import "@/styles/variables.less";` // 全局引入less文件
+            }
+          }
         ],
       },
       {

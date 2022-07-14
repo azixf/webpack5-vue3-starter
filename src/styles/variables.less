@@ -1,0 +1,124 @@
+// colors
+@font-dark-color: #000000;
+@font-common-color: #333333;
+@font-light-color: #666666;
+@font-lighter-color: #999999;
+
+// layout
+.flex {
+  display: flex;
+}
+
+.flex-1 {
+  flex: 1;
+}
+
+.center {
+  align-items: center;
+  justify-content: center;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.text-ellipsis {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.text-2-ellipsis {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  word-break: break-all;
+}
+
+.cursor {
+  cursor: pointer;
+}
+
+@axises: {
+  align: align-items;
+  justify: justify-content
+};
+
+
+
+@styles: {
+  base: baseline;
+  center: center;
+  end: flex-end;
+  start: flex-start;
+  stretch: stretch;
+  around: space-around;
+  between: space-between
+};
+
+each(@axises,.(@value, @key){
+  each(@styles, .(@v, @k){
+    .@{key}-@{k} {
+      @{value}: @v
+    }
+  })
+})
+
+
+
+@directions: {
+  row: row;
+  col: column;
+  row-r: row-reverse;
+  col-r: column-reverse
+};
+
+each(@directions, {
+  .flex-@{key} {
+    flex-direction: @value;
+  }
+})
+
+// margin padding
+@distance: {
+  2: 2px;
+  4: 4px;
+  6: 6px;
+  8: 8px;
+  10: 10px;
+  12: 12px;
+  14: 14px;
+  16: 16px;
+  18: 18px;
+  20: 20px;
+  24: 24px;
+  32: 32px;
+  40: 40px;
+  48: 48px;
+};
+
+@types: {
+  m: margin;
+  p: padding;
+}
+
+@d-directions: {
+  l: left;
+  t: top;
+  r: right;
+  b: bottom;
+}
+// 生成诸如 m-l-2/p-t-10 即 margin-left: 2px;/padding-top: 10px;
+each(@types,.(@vt, @kt) {
+  // m p
+  each(@d-directions, .(@vd, @kd) {
+     // l r t b
+     each(@distance, .(@vi, @ki) {
+      // 2 4 6 8 10 12 ...
+      .@{kt}-@{kd}-@{ki} {
+        @{vt}-@{vd}: @vi;
+      }
+     })
+  })
+})

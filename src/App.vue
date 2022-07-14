@@ -1,19 +1,21 @@
 <template>
-  <h1>App</h1>
-  <div>{{ count }}</div>
-  <button @click="increament">increament</button>
+  <router-view v-slot="{ Component }">
+    <keep-alive>
+      <compoent :is="Component" v-if="$route.meta.keepAlive"></compoent>
+    </keep-alive>
+    <component :is="Component" v-if="!$route.meta.keepAlive"></component>
+  </router-view>
 </template>
-
-<script setup lang="ts">
-import { ref } from 'vue';
-
-const count = ref(0)
-
-function increament() {
-  count.value++
-}
-</script>
 
 <style lang="less">
 @import "./styles/common.less";
+
+// #nprogress .bar {
+//     background: #1890ff  !important;
+//   }
+
+//   #nprogress .spinner-icon {
+//     border-top-color: #1890ff  !important;
+//     border-left-color: #1890ff  !important;
+//   }
 </style>

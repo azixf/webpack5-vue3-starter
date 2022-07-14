@@ -1,5 +1,7 @@
 const { merge } = require('webpack-merge')
 const baseConfig = require('./webpack.base')
+const ESLintPlugin = require('eslint-webpack-plugin')
+
 module.exports = merge(baseConfig, {
   mode: 'development',
   devtool: 'source-map',
@@ -7,6 +9,8 @@ module.exports = merge(baseConfig, {
   devServer: {
     hot: true, // 热更新
     open: false, // 自动打开浏览器
-    quiet: true
-  }
+  },
+  plugins: [
+    new ESLintPlugin({ extensions: ['js', 'ts', 'vue', 'tsx', 'jsx']}) // 会被eslint检查的文件扩展名
+  ]
 })
