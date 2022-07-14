@@ -1,6 +1,7 @@
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const { VueLoaderPlugin } = require("vue-loader");
+const { DefinePlugin, ProgressPlugin } = require('webpack')
 const path = require('path')
 
 const isDev = process.env.NODE_ENV !== "production";
@@ -10,29 +11,10 @@ module.exports = {
     alias: {
       '@': path.resolve(__dirname, '../src')
     },
-    extensions: ['.js','.ts','.tsx','.jsx','.json']
+    extensions: ['.js', '.ts', '.tsx', '.jsx', '.json']
   },
   cache: {
     type: 'filesystem' // 缓存到文件系统
-  },
-  optimization: {
-    splitChunks: {
-      chunks: 'all',
-      minSize: 20000,
-      minChunks: 1,
-      cacheGroups: {
-        defaultVendors: {
-          test: /[\\/]node_modules[\\/]/,
-          name: 'vendors',
-          priority: -10
-        },
-        default: {
-          minChunks: 2,
-          name: 'default',
-          priority: -20
-        }
-      }
-    }
   },
   module: {
     rules: [
@@ -79,7 +61,13 @@ module.exports = {
     new HtmlWebpackPlugin({
       title: "webpack5-vue-starter",
       template: "./index.html",
+      favicon: path.resolve(__dirname, '../public/favicon.ico')
     }),
     new VueLoaderPlugin(),
+    new DefinePlugin({
+      __VUE_OPTIONS_API__: false,
+      __VUE_PROD_DEVTOOLS__: false
+    }),
+    new ProgressPlugin({ percentBy: 'entries' }) // 展示构建、打包进度
   ],
 };
