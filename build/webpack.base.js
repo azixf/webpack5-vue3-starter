@@ -3,6 +3,9 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const { VueLoaderPlugin } = require("vue-loader");
 const { DefinePlugin, ProgressPlugin } = require('webpack')
 const path = require('path')
+const Components = require('unplugin-vue-components/webpack')
+const { AntDesignVueResolver } = require('unplugin-vue-components/resolvers')
+const AutoImport = require('unplugin-auto-import/webpack')
 
 const isDev = process.env.NODE_ENV !== "production";
 module.exports = {
@@ -44,7 +47,7 @@ module.exports = {
               lessOptions: {
                 javascriptEnabled: true,
                 modifyVars: {
-                  'primary': '#1850fa'
+                  hack: `true; @import "@/styles/override.less";`
                 } // 覆盖组件库主体变量
               },
               additionalData: `@import "@/styles/variables.less";` // 全局引入less文件
@@ -77,8 +80,20 @@ module.exports = {
     new VueLoaderPlugin(),
     new DefinePlugin({
       __VUE_OPTIONS_API__: false,
-      __VUE_PROD_DEVTOOLS__: false
+      __VUE_PROD_DEVTOOLS__: false,
+      'process.env': {
+        NODE_ENV: JSON.stringify(process.env.NODE_ENV)
+      }
     }),
-    new ProgressPlugin({ percentBy: 'entries' }) // 展示构建、打包进度
+    new ProgressPlugin({ percentBy: 'entries' }), // 展示构建、打包进度
+    Components({
+      resolvers: [AntDesignVueResolver()],
+      dts: 'src/types/components.d.ts'
+    }),
+    AutoImport({
+      resolvers: [AntDesignVueResolver()],
+      imports: ['vue', 'vue-router'],
+      dts: 'src/types/auto-import.d.ts'
+    })
   ],
 };
