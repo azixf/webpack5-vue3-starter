@@ -1,24 +1,24 @@
-import { defineStore } from "pinia";
+import { defineStore } from 'pinia'
 
-const useMainStore = defineStore("main", {
+const useMainStore = defineStore('main', {
   state() {
-    return {};
+    return {}
   },
   getters: {},
   actions: {},
-});
+})
 // 持久化存储
-const mainStore = useMainStore();
+const mainStore = useMainStore()
 // 存值
 mainStore.$subscribe((_, state) => {
-  sessionStorage.setItem("main-store", JSON.stringify({ ...state }));
-});
+  sessionStorage.setItem('main-store', JSON.stringify({ ...state }))
+})
 // 取值
-const value = sessionStorage.getItem("main-store");
+const value = sessionStorage.getItem('main-store')
 if (value) {
-  mainStore.$state = JSON.parse(value);
+  mainStore.$state = JSON.parse(value)
 }
 
-export { useMainStore };
+export { useMainStore }
 
-export default useMainStore;
+export default useMainStore

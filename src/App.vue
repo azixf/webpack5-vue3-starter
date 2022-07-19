@@ -8,7 +8,7 @@
 </template>
 
 <style lang="less">
-@import "./styles/common.less";
+@import './styles/common.less';
 
 // #nprogress .bar {
 //     background: #1890ff  !important;
