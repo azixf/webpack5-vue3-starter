@@ -108,5 +108,11 @@
     "cz-customizable": {
       "config": "./cz.config.js"
     }
+  },
+  "lint-staged": {
+    "src/**/*.{js,ts,vue,jsx,tsx}": [
+      "eslint --fix --ext .js,.ts,.vue,.tsx,.jsx",
+      "prettier --write"
+    ]
   }
 }
