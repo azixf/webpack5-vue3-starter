@@ -44,7 +44,7 @@ const http: CustomHttp = {
   ) {
     return new Promise((resolve, reject) => {
       data = data || {}
-      axios
+      instance
         .request({
           url,
           method,
